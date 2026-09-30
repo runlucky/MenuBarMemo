@@ -12,6 +12,7 @@ internal final class MemoStore {
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let tabsKey = "MenuBarMemo.tabs"
     @ObservationIgnored private let fontSizeKey = "MenuBarMemo.fontSize"
+    @ObservationIgnored private let selectedTabIDKey = "MenuBarMemo.selectedTabID"
 
     internal init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -19,7 +20,8 @@ internal final class MemoStore {
         let loadedTabs = defaults.data(forKey: tabsKey).flatMap { try? JSONDecoder().decode([MemoTab].self, from: $0) } ?? []
         let tabs = loadedTabs.isEmpty ? [MemoTab(title: "Memo 1")] : loadedTabs
         self.tabs = tabs
-        self.selectedTabID = tabs[0].id
+        let storedSelectedTabID = defaults.string(forKey: selectedTabIDKey).flatMap(UUID.init(uuidString:))
+        self.selectedTabID = tabs.first { $0.id == storedSelectedTabID }?.id ?? tabs[0].id
         self.fontSize = defaults.object(forKey: fontSizeKey) as? Double ?? 16.0
 
         save()
@@ -66,6 +68,7 @@ internal final class MemoStore {
 
     internal func selectTab(id: UUID) {
         selectedTabID = id
+        save()
     }
 
     internal func setFontSize(_ size: Double) {
@@ -80,6 +83,7 @@ internal final class MemoStore {
     private func save() {
         defaults.set(try? JSONEncoder().encode(tabs), forKey: tabsKey)
         defaults.set(fontSize, forKey: fontSizeKey)
+        defaults.set(selectedTabID.uuidString, forKey: selectedTabIDKey)
     }
 
 }

@@ -29,6 +29,19 @@ internal struct MemoStoreTests {
         #expect(reloaded.fontSize == 18)
     }
 
+    @Test internal func selectedTabPersistsAcrossReloads() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.addTab()
+        store.addTab()
+        store.selectTab(id: store.tabs[1].id)
+
+        let reloaded = MemoStore(defaults: defaults)
+        #expect(reloaded.selectedTabID == store.tabs[1].id)
+    }
+
     @Test internal func removeSelectedTabKeepsMinimumOfOne() throws {
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defer { defaults.removePersistentDomain(forName: suiteName) }
