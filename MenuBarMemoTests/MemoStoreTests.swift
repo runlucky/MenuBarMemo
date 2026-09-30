@@ -57,6 +57,18 @@ internal struct MemoStoreTests {
         #expect(store.tabs.count == 1)
     }
 
+    @Test internal func addTabContinuesNumberingAfterRemoval() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.addTab()
+        store.selectTab(id: store.tabs[0].id)
+        store.removeSelectedTab()
+        store.addTab()
+        #expect(store.tabs.map(\.title) == ["Memo 2", "Memo 3"])
+    }
+
     @Test internal func fontSizeIsClampedToRange() throws {
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defer { defaults.removePersistentDomain(forName: suiteName) }

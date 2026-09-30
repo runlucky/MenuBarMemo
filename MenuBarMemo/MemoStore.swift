@@ -32,7 +32,8 @@ internal final class MemoStore {
     }
 
     internal func addTab() {
-        let newTab = MemoTab(title: "Memo \(tabs.count + 1)")
+        let lastNumber = tabs.compactMap { $0.title.wholeMatch(of: /Memo (\d+)/).flatMap { Int($0.1) } }.max() ?? 0
+        let newTab = MemoTab(title: "Memo \(lastNumber + 1)")
         tabs.append(newTab)
         selectedTabID = newTab.id
         save()
