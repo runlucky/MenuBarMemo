@@ -1,0 +1,549 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		193FC7B0306CF4EA00188FA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 193FC79A306CF4E900188FA0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 193FC7A1306CF4EA00188FA0;
+			remoteInfo = MenuBarMemo;
+		};
+		193FC7BA306CF4EA00188FA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 193FC79A306CF4E900188FA0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 193FC7A1306CF4EA00188FA0;
+			remoteInfo = MenuBarMemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		193FC7A2306CF4EA00188FA0 /* MenuBarMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		193FC7AF306CF4EA00188FA0 /* MenuBarMemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuBarMemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		193FC7B9306CF4EA00188FA0 /* MenuBarMemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuBarMemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		193FC7A4306CF4EA00188FA0 /* MenuBarMemo */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MenuBarMemo;
+			sourceTree = "<group>";
+		};
+		193FC7B2306CF4EA00188FA0 /* MenuBarMemoTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MenuBarMemoTests;
+			sourceTree = "<group>";
+		};
+		193FC7BC306CF4EA00188FA0 /* MenuBarMemoUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MenuBarMemoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		193FC79F306CF4EA00188FA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		193FC7AC306CF4EA00188FA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		193FC7B6306CF4EA00188FA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		193FC799306CF4E900188FA0 = {
+			isa = PBXGroup;
+			children = (
+				193FC7A4306CF4EA00188FA0 /* MenuBarMemo */,
+				193FC7B2306CF4EA00188FA0 /* MenuBarMemoTests */,
+				193FC7BC306CF4EA00188FA0 /* MenuBarMemoUITests */,
+				193FC7A3306CF4EA00188FA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		193FC7A3306CF4EA00188FA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				193FC7A2306CF4EA00188FA0 /* MenuBarMemo.app */,
+				193FC7AF306CF4EA00188FA0 /* MenuBarMemoTests.xctest */,
+				193FC7B9306CF4EA00188FA0 /* MenuBarMemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		193FC7A1306CF4EA00188FA0 /* MenuBarMemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 193FC7C1306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemo" */;
+			buildPhases = (
+				193FC79E306CF4EA00188FA0 /* Sources */,
+				193FC79F306CF4EA00188FA0 /* Frameworks */,
+				193FC7A0306CF4EA00188FA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				193FC7A4306CF4EA00188FA0 /* MenuBarMemo */,
+			);
+			name = MenuBarMemo;
+			productName = MenuBarMemo;
+			productReference = 193FC7A2306CF4EA00188FA0 /* MenuBarMemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		193FC7AE306CF4EA00188FA0 /* MenuBarMemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 193FC7C4306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemoTests" */;
+			buildPhases = (
+				193FC7AB306CF4EA00188FA0 /* Sources */,
+				193FC7AC306CF4EA00188FA0 /* Frameworks */,
+				193FC7AD306CF4EA00188FA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				193FC7B1306CF4EA00188FA0 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				193FC7B2306CF4EA00188FA0 /* MenuBarMemoTests */,
+			);
+			name = MenuBarMemoTests;
+			productName = MenuBarMemoTests;
+			productReference = 193FC7AF306CF4EA00188FA0 /* MenuBarMemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		193FC7B8306CF4EA00188FA0 /* MenuBarMemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 193FC7C7306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemoUITests" */;
+			buildPhases = (
+				193FC7B5306CF4EA00188FA0 /* Sources */,
+				193FC7B6306CF4EA00188FA0 /* Frameworks */,
+				193FC7B7306CF4EA00188FA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				193FC7BB306CF4EA00188FA0 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				193FC7BC306CF4EA00188FA0 /* MenuBarMemoUITests */,
+			);
+			name = MenuBarMemoUITests;
+			productName = MenuBarMemoUITests;
+			productReference = 193FC7B9306CF4EA00188FA0 /* MenuBarMemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		193FC79A306CF4E900188FA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					193FC7A1306CF4EA00188FA0 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					193FC7AE306CF4EA00188FA0 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 193FC7A1306CF4EA00188FA0;
+					};
+					193FC7B8306CF4EA00188FA0 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 193FC7A1306CF4EA00188FA0;
+					};
+				};
+			};
+			buildConfigurationList = 193FC79D306CF4E900188FA0 /* Build configuration list for PBXProject "MenuBarMemo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 193FC799306CF4E900188FA0;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 193FC7A3306CF4EA00188FA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				193FC7A1306CF4EA00188FA0 /* MenuBarMemo */,
+				193FC7AE306CF4EA00188FA0 /* MenuBarMemoTests */,
+				193FC7B8306CF4EA00188FA0 /* MenuBarMemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		193FC7A0306CF4EA00188FA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		193FC7AD306CF4EA00188FA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		193FC7B7306CF4EA00188FA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		193FC79E306CF4EA00188FA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		193FC7AB306CF4EA00188FA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		193FC7B5306CF4EA00188FA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		193FC7B1306CF4EA00188FA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 193FC7A1306CF4EA00188FA0 /* MenuBarMemo */;
+			targetProxy = 193FC7B0306CF4EA00188FA0 /* PBXContainerItemProxy */;
+		};
+		193FC7BB306CF4EA00188FA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 193FC7A1306CF4EA00188FA0 /* MenuBarMemo */;
+			targetProxy = 193FC7BA306CF4EA00188FA0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		193FC7BF306CF4EA00188FA0 /* Debug configuration for PBXProject "MenuBarMemo" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		193FC7C0306CF4EA00188FA0 /* Release configuration for PBXProject "MenuBarMemo" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		193FC7C2306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemo" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		193FC7C3306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemo" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		193FC7C5306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemoTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenuBarMemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MenuBarMemo";
+			};
+			name = Debug;
+		};
+		193FC7C6306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemoTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenuBarMemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MenuBarMemo";
+			};
+			name = Release;
+		};
+		193FC7C8306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemoUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = MenuBarMemo;
+			};
+			name = Debug;
+		};
+		193FC7C9306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemoUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 89944GJ9HX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kakeru.MenuBarMemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = MenuBarMemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		193FC79D306CF4E900188FA0 /* Build configuration list for PBXProject "MenuBarMemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				193FC7BF306CF4EA00188FA0 /* Debug configuration for PBXProject "MenuBarMemo" */,
+				193FC7C0306CF4EA00188FA0 /* Release configuration for PBXProject "MenuBarMemo" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		193FC7C1306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				193FC7C2306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemo" */,
+				193FC7C3306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemo" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		193FC7C4306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				193FC7C5306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemoTests" */,
+				193FC7C6306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemoTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		193FC7C7306CF4EA00188FA0 /* Build configuration list for PBXNativeTarget "MenuBarMemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				193FC7C8306CF4EA00188FA0 /* Debug configuration for PBXNativeTarget "MenuBarMemoUITests" */,
+				193FC7C9306CF4EA00188FA0 /* Release configuration for PBXNativeTarget "MenuBarMemoUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 193FC79A306CF4E900188FA0 /* Project object */;
+	validationLevel = 1;
+}
