@@ -3,6 +3,7 @@ import SwiftUI
 internal struct MemoPopoverView: View {
     internal let store: MemoStore
     @State private var settingsOpen = false
+    @State private var confirmingDelete = false
 
     internal var body: some View {
         VStack(spacing: 12) {
@@ -89,10 +90,17 @@ internal struct MemoPopoverView: View {
             Spacer()
 
             Button("Delete Tab") {
-                store.removeSelectedTab()
+                confirmingDelete = true
             }
             .disabled(store.tabs.count <= 1)
             .buttonStyle(.bordered)
+            .confirmationDialog("Delete this memo?", isPresented: $confirmingDelete) {
+                Button("Delete", role: .destructive) {
+                    store.removeSelectedTab()
+                }
+            } message: {
+                Text("This memo will be permanently deleted.")
+            }
         }
     }
 
