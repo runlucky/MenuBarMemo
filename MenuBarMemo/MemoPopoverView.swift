@@ -137,7 +137,7 @@ internal struct MemoPopoverView: View {
             get: { store.selectedTab.text },
             set: { store.updateSelectedText($0) }
         ))
-        .font(.system(size: store.fontSize))
+        .font(.system(size: store.fontSize, design: .monospaced))
         .clipShape(.rect(cornerRadius: 8))
         .frame(maxHeight: .infinity)
     }
@@ -158,13 +158,6 @@ internal struct MemoPopoverView: View {
                 in: store.fontSizeRange,
                 step: 1
             )
-
-            HStack {
-                Spacer()
-                Button("Done") {
-                    settingsOpen = false
-                }
-            }
 
             Spacer()
         }
