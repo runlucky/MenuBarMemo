@@ -1,19 +1,21 @@
-import XCTest
+import Foundation
+import Testing
 @testable import MenuBarMemo
 
 @MainActor
-final class MemoStoreTests: XCTestCase {
-    func testTabsPersistAcrossReloads() throws {
-        let suiteName = "MenuBarMemoTests.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defaults.removePersistentDomain(forName: suiteName)
+internal struct MemoStoreTests {
+    private let suiteName = "MenuBarMemoTests.\(UUID().uuidString)"
+
+    @Test internal func tabsPersistAcrossReloads() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
 
         let store = MemoStore(defaults: defaults)
-        XCTAssertEqual(store.tabs.count, 1)
-        XCTAssertEqual(store.selectedTab?.title, "Memo 1")
+        #expect(store.tabs.count == 1)
+        #expect(store.selectedTab.title == "Memo 1")
 
         store.addTab()
-        XCTAssertEqual(store.tabs.count, 2)
+        #expect(store.tabs.count == 2)
 
         store.selectTab(id: store.tabs[0].id)
         store.updateSelectedText("My draft memo")
@@ -21,22 +23,37 @@ final class MemoStoreTests: XCTestCase {
         store.setFontSize(18)
 
         let reloaded = MemoStore(defaults: defaults)
-        XCTAssertEqual(reloaded.tabs.count, 2)
-        XCTAssertEqual(reloaded.tabs[0].title, "Work log")
-        XCTAssertEqual(reloaded.tabs[0].text, "My draft memo")
-        XCTAssertEqual(reloaded.fontSize, 18, accuracy: 0.0001)
+        #expect(reloaded.tabs.count == 2)
+        #expect(reloaded.tabs[0].title == "Work log")
+        #expect(reloaded.tabs[0].text == "My draft memo")
+        #expect(reloaded.fontSize == 18)
     }
 
-    func testRemoveSelectedTabKeepsMinimumOfOne() {
-        let suiteName = "MenuBarMemoTests.Remove"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defaults.removePersistentDomain(forName: suiteName)
+    @Test internal func removeSelectedTabKeepsMinimumOfOne() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
 
         let store = MemoStore(defaults: defaults)
         store.addTab()
-        XCTAssertEqual(store.tabs.count, 2)
+        #expect(store.tabs.count == 2)
 
         store.removeSelectedTab()
-        XCTAssertEqual(store.tabs.count, 1)
+        #expect(store.tabs.count == 1)
+
+        store.removeSelectedTab()
+        #expect(store.tabs.count == 1)
     }
+
+    @Test internal func fontSizeIsClampedToRange() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.setFontSize(100)
+        #expect(store.fontSize == store.fontSizeRange.upperBound)
+
+        store.setFontSize(1)
+        #expect(store.fontSize == store.fontSizeRange.lowerBound)
+    }
+
 }

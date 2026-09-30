@@ -1,23 +1,10 @@
-#if canImport(SwiftUI) && os(macOS)
 import SwiftUI
 
-@main
-struct MenuBarMemoApp: App {
-    @StateObject private var store = MemoStore()
-
-    var body: some Scene {
-        MenuBarExtra("MenuBarMemo", systemImage: "note.text") {
-            MemoPopoverView(store: store)
-                .frame(width: 420, height: 520)
-        }
-    }
-}
-
-struct MemoPopoverView: View {
-    @ObservedObject var store: MemoStore
+internal struct MemoPopoverView: View {
+    internal let store: MemoStore
     @State private var settingsOpen = false
 
-    var body: some View {
+    internal var body: some View {
         VStack(spacing: 12) {
             header
 
@@ -75,28 +62,30 @@ struct MemoPopoverView: View {
 
     private var editor: some View {
         VStack(alignment: .leading, spacing: 8) {
-            TextField("Title", text: Binding(
-                get: { store.selectedTab?.title ?? "Memo" },
+            TextField("Untitled", text: Binding(
+                get: { store.selectedTab.title },
                 set: { store.renameSelectedTab($0) }
             ))
             .textFieldStyle(.roundedBorder)
             .font(.headline)
 
             TextEditor(text: Binding(
-                get: { store.selectedTab?.text ?? "" },
+                get: { store.selectedTab.text },
                 set: { store.updateSelectedText($0) }
             ))
-            .font(.system(size: CGFloat(store.fontSize)))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(6)
-            .background(Color(NSColor.textBackgroundColor))
-            .cornerRadius(8)
+            .font(.system(size: store.fontSize))
+            .clipShape(.rect(cornerRadius: 8))
         }
         .frame(maxHeight: .infinity)
     }
 
     private var footer: some View {
         HStack {
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+            .buttonStyle(.bordered)
+
             Spacer()
 
             Button("Delete Tab") {
@@ -120,7 +109,7 @@ struct MemoPopoverView: View {
                     get: { store.fontSize },
                     set: { store.setFontSize($0) }
                 ),
-                in: 12...28,
+                in: store.fontSizeRange,
                 step: 1
             )
 
@@ -130,7 +119,9 @@ struct MemoPopoverView: View {
                     settingsOpen = false
                 }
             }
+
+            Spacer()
         }
     }
+
 }
-#endif

@@ -1,17 +1,14 @@
-//
-//  MenuBarMemoApp.swift
-//  MenuBarMemo
-//
-//  Created by kakeru on 2026/09/30.
-//
-
 import SwiftUI
 
 @main
-struct MenuBarMemoApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+internal struct MenuBarMemoApp: App {
+    @State private var store = MemoStore()
+
+    internal var body: some Scene {
+        MenuBarExtra("MenuBarMemo", systemImage: "note.text") {
+            MemoPopoverView(store: store)
         }
+        .menuBarExtraStyle(.window)
     }
+
 }

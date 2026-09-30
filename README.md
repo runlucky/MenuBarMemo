@@ -10,7 +10,7 @@ Features:
 
 ## Run locally
 
-Open the package in Xcode on macOS and build/run the `MenuBarMemo` target.
+Open `MenuBarMemo.xcodeproj` in Xcode and run the `MenuBarMemo` scheme.
 
 ## Notes
 
