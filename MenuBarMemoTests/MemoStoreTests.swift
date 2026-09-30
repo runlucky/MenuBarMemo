@@ -42,7 +42,7 @@ internal struct MemoStoreTests {
         #expect(reloaded.selectedTabID == store.tabs[1].id)
     }
 
-    @Test internal func removeSelectedTabKeepsMinimumOfOne() throws {
+    @Test internal func removeTabKeepsMinimumOfOne() throws {
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defer { defaults.removePersistentDomain(forName: suiteName) }
 
@@ -50,11 +50,34 @@ internal struct MemoStoreTests {
         store.addTab()
         #expect(store.tabs.count == 2)
 
-        store.removeSelectedTab()
+        store.removeTab(id: store.tabs[1].id)
         #expect(store.tabs.count == 1)
 
-        store.removeSelectedTab()
+        store.removeTab(id: store.tabs[0].id)
         #expect(store.tabs.count == 1)
+    }
+
+    @Test internal func removeSelectedTabSelectsPreviousTab() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.addTab()
+        store.addTab()
+        store.removeTab(id: store.tabs[2].id)
+        #expect(store.selectedTabID == store.tabs[1].id)
+    }
+
+    @Test internal func removeUnselectedTabKeepsSelection() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.addTab()
+        store.addTab()
+        let selectedTabID = store.selectedTabID
+        store.removeTab(id: store.tabs[0].id)
+        #expect(store.selectedTabID == selectedTabID)
     }
 
     @Test internal func addTabContinuesNumberingAfterRemoval() throws {
@@ -63,8 +86,7 @@ internal struct MemoStoreTests {
 
         let store = MemoStore(defaults: defaults)
         store.addTab()
-        store.selectTab(id: store.tabs[0].id)
-        store.removeSelectedTab()
+        store.removeTab(id: store.tabs[0].id)
         store.addTab()
         #expect(store.tabs.map(\.title) == ["Memo 2", "Memo 3"])
     }

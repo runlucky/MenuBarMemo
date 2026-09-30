@@ -39,13 +39,15 @@ internal final class MemoStore {
         save()
     }
 
-    internal func removeSelectedTab() {
-        guard 2 <= tabs.count, let index = selectedIndex else {
+    internal func removeTab(id: UUID) {
+        guard 2 <= tabs.count, let index = tabs.firstIndex(where: { $0.id == id }) else {
             return
         }
 
         tabs.remove(at: index)
-        selectedTabID = tabs[max(index - 1, 0)].id
+        if id == selectedTabID {
+            selectedTabID = tabs[max(index - 1, 0)].id
+        }
         save()
     }
 
