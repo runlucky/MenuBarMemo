@@ -3,7 +3,10 @@ import SwiftUI
 internal struct MemoPopoverView: View {
     internal let store: MemoStore
     @State private var settingsOpen = false
-    @State private var confirmingDelete = false
+    @State private var editingTabID: UUID? = nil
+    @State private var hoveredTabID: UUID? = nil
+    @State private var quitHovered = false
+    @FocusState private var titleFocused: Bool
 
     internal var body: some View {
         VStack(spacing: 12) {
@@ -12,9 +15,7 @@ internal struct MemoPopoverView: View {
             if settingsOpen {
                 settingsPanel
             } else {
-                tabStrip
                 editor
-                footer
             }
         }
         .padding()
@@ -23,9 +24,24 @@ internal struct MemoPopoverView: View {
 
     private var header: some View {
         HStack {
-            Text("MenuBarMemo")
-                .font(.headline)
-            Spacer()
+            Button {
+                NSApplication.shared.terminate(nil)
+            } label: {
+                Circle()
+                    .fill(Color(nsColor: .systemRed))
+                    .frame(width: 12, height: 12)
+                    .overlay {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 7, weight: .bold))
+                            .foregroundStyle(.black.opacity(0.5))
+                            .opacity(quitHovered ? 1 : 0)
+                    }
+            }
+            .buttonStyle(.plain)
+            .onHover { quitHovered = $0 }
+            .help("Quit")
+
+            tabStrip
 
             Button {
                 store.addTab()
@@ -47,61 +63,83 @@ internal struct MemoPopoverView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(store.tabs) { tab in
-                    Button {
-                        store.selectTab(id: tab.id)
-                    } label: {
-                        Text(tab.title.isEmpty ? "Untitled" : tab.title)
-                            .lineLimit(1)
-                            .frame(maxWidth: 120)
+                    if tab.id == editingTabID {
+                        TextField("Untitled", text: Binding(
+                            get: { store.selectedTab.title },
+                            set: { store.renameSelectedTab($0) }
+                        ))
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 120)
+                        .focused($titleFocused)
+                        .onAppear {
+                            DispatchQueue.main.async {
+                                titleFocused = true
+                            }
+                        }
+                        .onSubmit {
+                            editingTabID = nil
+                        }
+                        .onChange(of: titleFocused) {
+                            if !titleFocused {
+                                editingTabID = nil
+                            }
+                        }
+                    } else {
+                        tabButton(tab)
                     }
-                    .buttonStyle(.bordered)
-                    .tint(tab.id == store.selectedTabID ? .accentColor : .secondary)
                 }
             }
         }
+    }
+
+    private func tabButton(_ tab: MemoTab) -> some View {
+        let selected = tab.id == store.selectedTabID
+        let deletable = tab.id == hoveredTabID && 2 <= store.tabs.count
+
+        return HStack(spacing: 4) {
+            Button {
+                store.removeTab(id: tab.id)
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.caption2.bold())
+            }
+            .buttonStyle(.plain)
+            .opacity(deletable ? 1 : 0)
+            .allowsHitTesting(deletable)
+
+            Text(tab.title.isEmpty ? "Untitled" : tab.title)
+                .lineLimit(1)
+                .frame(maxWidth: 120)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .foregroundStyle(selected ? .primary : .secondary)
+        .background(selected ? Color.primary.opacity(0.15) : Color.secondary.opacity(0.1), in: .rect(cornerRadius: 6))
+        .contentShape(.rect)
+        .onHover { hovering in
+            if hovering {
+                hoveredTabID = tab.id
+            } else if hoveredTabID == tab.id {
+                hoveredTabID = nil
+            }
+        }
+        .onTapGesture {
+            store.selectTab(id: tab.id)
+        }
+        .simultaneousGesture(TapGesture(count: 2).onEnded {
+            store.selectTab(id: tab.id)
+            editingTabID = tab.id
+        })
     }
 
     private var editor: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            TextField("Untitled", text: Binding(
-                get: { store.selectedTab.title },
-                set: { store.renameSelectedTab($0) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .font(.headline)
-
-            TextEditor(text: Binding(
-                get: { store.selectedTab.text },
-                set: { store.updateSelectedText($0) }
-            ))
-            .font(.system(size: store.fontSize))
-            .clipShape(.rect(cornerRadius: 8))
-        }
+        TextEditor(text: Binding(
+            get: { store.selectedTab.text },
+            set: { store.updateSelectedText($0) }
+        ))
+        .font(.system(size: store.fontSize, design: .monospaced))
+        .clipShape(.rect(cornerRadius: 8))
         .frame(maxHeight: .infinity)
-    }
-
-    private var footer: some View {
-        HStack {
-            Button("Quit") {
-                NSApplication.shared.terminate(nil)
-            }
-            .buttonStyle(.bordered)
-
-            Spacer()
-
-            Button("Delete Tab") {
-                confirmingDelete = true
-            }
-            .disabled(store.tabs.count <= 1)
-            .buttonStyle(.bordered)
-            .confirmationDialog("Delete this memo?", isPresented: $confirmingDelete) {
-                Button("Delete", role: .destructive) {
-                    store.removeSelectedTab()
-                }
-            } message: {
-                Text("This memo will be permanently deleted.")
-            }
-        }
     }
 
     private var settingsPanel: some View {
@@ -120,13 +158,6 @@ internal struct MemoPopoverView: View {
                 in: store.fontSizeRange,
                 step: 1
             )
-
-            HStack {
-                Spacer()
-                Button("Done") {
-                    settingsOpen = false
-                }
-            }
 
             Spacer()
         }
