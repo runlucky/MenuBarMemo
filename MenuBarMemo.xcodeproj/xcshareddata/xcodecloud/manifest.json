@@ -1,0 +1,9 @@
+{
+  "id" : "295a1991-77fc-4000-a670-caf5a67ea1d7",
+  "targets" : [
+    {
+      "id" : "92a60742-5db6-4118-9aab-dd40662f0204",
+      "name" : "MenuBarMemo"
+    }
+  ]
+}
