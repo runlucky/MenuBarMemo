@@ -27,8 +27,8 @@
       "hidden" : false,
       "layers" : [
         {
-          "image-name" : "notepad-glyph 2.svg",
-          "name" : "notepad-glyph 2",
+          "image-name" : "notepad-glyph.svg",
+          "name" : "notepad-glyph",
           "position-specializations" : [
             {
               "idiom" : "macOS",
