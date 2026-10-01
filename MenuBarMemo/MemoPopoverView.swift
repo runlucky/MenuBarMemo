@@ -97,15 +97,17 @@ internal struct MemoPopoverView: View {
         let deletable = tab.id == hoveredTabID && 2 <= store.tabs.count
 
         return HStack(spacing: 4) {
-            Button {
-                store.removeTab(id: tab.id)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.caption2.bold())
+            if deletable {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        store.removeTab(id: tab.id)
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.caption2.bold())
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
-            .opacity(deletable ? 1 : 0)
-            .allowsHitTesting(deletable)
 
             Text(tab.title.isEmpty ? "Untitled" : tab.title)
                 .lineLimit(1)
@@ -117,10 +119,12 @@ internal struct MemoPopoverView: View {
         .background(selected ? Color.primary.opacity(0.15) : Color.secondary.opacity(0.1), in: .rect(cornerRadius: 6))
         .contentShape(.rect)
         .onHover { hovering in
-            if hovering {
-                hoveredTabID = tab.id
-            } else if hoveredTabID == tab.id {
-                hoveredTabID = nil
+            withAnimation(.easeInOut(duration: 0.15)) {
+                if hovering {
+                    hoveredTabID = tab.id
+                } else if hoveredTabID == tab.id {
+                    hoveredTabID = nil
+                }
             }
         }
         .onTapGesture {
