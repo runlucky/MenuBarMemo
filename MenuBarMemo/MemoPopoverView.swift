@@ -6,6 +6,7 @@ internal struct MemoPopoverView: View {
     @State private var editingTabID: UUID? = nil
     @State private var hoveredTabID: UUID? = nil
     @State private var quitHovered = false
+    @State private var resizingSize: CGSize? = nil
     @FocusState private var titleFocused: Bool
 
     internal var body: some View {
@@ -19,7 +20,16 @@ internal struct MemoPopoverView: View {
             }
         }
         .padding()
-        .frame(width: 420, height: 520)
+        .frame(
+            width: (resizingSize ?? store.windowSize).width,
+            height: (resizingSize ?? store.windowSize).height
+        )
+        .background(ResizableWindow(minimumSize: store.minimumWindowSize) {
+            resizingSize = $0
+        } onResizeEnd: {
+            store.setWindowSize($0)
+            resizingSize = nil
+        })
     }
 
     private var header: some View {
