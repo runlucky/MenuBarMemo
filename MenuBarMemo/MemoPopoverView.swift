@@ -7,6 +7,7 @@ internal struct MemoPopoverView: View {
     @State private var hoveredTabID: UUID? = nil
     @State private var quitHovered = false
     @State private var resizingSize: CGSize? = nil
+    @State private var resizeStart: (mouseLocation: CGPoint, size: CGSize)? = nil
     @State private var screenSize: CGSize? = nil
     @FocusState private var titleFocused: Bool
 
@@ -22,12 +23,13 @@ internal struct MemoPopoverView: View {
         }
         .padding()
         .frame(width: windowSize.width, height: windowSize.height)
-        .background(ResizableWindow(minimumSize: store.minimumWindowSize) {
-            resizingSize = $0
-        } onResizeEnd: {
-            store.setWindowSize($0)
-            resizingSize = nil
-        } onScreenChange: {
+        .overlay(alignment: .bottomLeading) {
+            resizeGrip(.leading)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            resizeGrip(.trailing)
+        }
+        .background(ResizableWindow {
             screenSize = $0
         })
     }
@@ -39,6 +41,40 @@ internal struct MemoPopoverView: View {
         }
 
         return CGSize(width: min(size.width, screenSize.width), height: min(size.height, screenSize.height))
+    }
+
+    private func resizeGrip(_ edge: HorizontalEdge) -> some View {
+        Path { path in
+            for offset in [4.0, 8.0, 12.0] {
+                path.move(to: CGPoint(x: 12, y: 12 - offset))
+                path.addLine(to: CGPoint(x: 12 - offset, y: 12))
+            }
+        }
+        .stroke(.secondary, lineWidth: 1)
+        .frame(width: 12, height: 12)
+        .scaleEffect(x: edge == .trailing ? 1 : -1)
+        .padding(6)
+        .contentShape(.rect)
+        .pointerStyle(.frameResize(position: edge == .trailing ? .bottomTrailing : .bottomLeading))
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    let mouseLocation = NSEvent.mouseLocation
+                    let start = resizeStart ?? (mouseLocation, windowSize)
+                    resizeStart = start
+                    let dx = mouseLocation.x - start.mouseLocation.x
+                    let dy = mouseLocation.y - start.mouseLocation.y
+                    resizingSize = CGSize(
+                        width: max(start.size.width + (edge == .trailing ? dx : -dx), store.minimumWindowSize.width),
+                        height: max(start.size.height - dy, store.minimumWindowSize.height)
+                    )
+                }
+                .onEnded { _ in
+                    store.setWindowSize(windowSize)
+                    resizingSize = nil
+                    resizeStart = nil
+                }
+        )
     }
 
     private var header: some View {
