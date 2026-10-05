@@ -24,6 +24,7 @@ internal struct MemoPopoverView: View {
                     .padding(10)
             } else {
                 editor
+                    .padding(.bottom, 16)
             }
         }
         .frame(width: windowSize.width, height: windowSize.height)
