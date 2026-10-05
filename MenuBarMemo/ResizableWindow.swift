@@ -5,6 +5,7 @@ internal struct ResizableWindow: NSViewRepresentable {
     internal let minimumSize: CGSize
     internal let onResize: (CGSize) -> Void
     internal let onResizeEnd: (CGSize) -> Void
+    internal let onScreenChange: (CGSize) -> Void
 
     internal func makeNSView(context: Context) -> WindowObservingView {
         WindowObservingView()
@@ -14,6 +15,7 @@ internal struct ResizableWindow: NSViewRepresentable {
         nsView.minimumSize = minimumSize
         nsView.onResize = onResize
         nsView.onResizeEnd = onResizeEnd
+        nsView.onScreenChange = onScreenChange
         nsView.configureWindow()
     }
 
@@ -21,6 +23,7 @@ internal struct ResizableWindow: NSViewRepresentable {
         internal var minimumSize = CGSize.zero
         internal var onResize: (CGSize) -> Void = { _ in }
         internal var onResizeEnd: (CGSize) -> Void = { _ in }
+        internal var onScreenChange: (CGSize) -> Void = { _ in }
         private var observers: [NSObjectProtocol] = []
 
         internal override func viewDidMoveToWindow() {
@@ -32,6 +35,7 @@ internal struct ResizableWindow: NSViewRepresentable {
             }
 
             configureWindow()
+            notifyScreenSize(of: window)
             observers = [
                 observe(NSWindow.didResizeNotification, of: window) { [weak self] window in
                     if window.inLiveResize {
@@ -40,6 +44,9 @@ internal struct ResizableWindow: NSViewRepresentable {
                 },
                 observe(NSWindow.didEndLiveResizeNotification, of: window) { [weak self] window in
                     self?.onResizeEnd(window.contentLayoutRect.size)
+                },
+                observe(NSWindow.didChangeScreenNotification, of: window) { [weak self] window in
+                    self?.notifyScreenSize(of: window)
                 },
             ]
         }
@@ -54,6 +61,14 @@ internal struct ResizableWindow: NSViewRepresentable {
                     handler(window)
                 }
             }
+        }
+
+        private func notifyScreenSize(of window: NSWindow) {
+            guard let screen = window.screen ?? NSScreen.main else {
+                return
+            }
+
+            onScreenChange(screen.visibleFrame.size)
         }
 
         internal func configureWindow() {
