@@ -14,16 +14,18 @@ internal struct MemoPopoverView: View {
     @FocusState private var titleFocused: Bool
 
     internal var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 0) {
             header
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
 
             if settingsOpen {
                 settingsPanel
+                    .padding(10)
             } else {
                 editor
             }
         }
-        .padding()
         .frame(width: windowSize.width, height: windowSize.height)
         .overlay(alignment: .bottomLeading) {
             resizeGrip(.leading)
@@ -51,16 +53,8 @@ internal struct MemoPopoverView: View {
     }
 
     private func resizeGrip(_ edge: HorizontalEdge) -> some View {
-        Path { path in
-            for offset in [4.0, 8.0, 12.0] {
-                path.move(to: CGPoint(x: 12, y: 12 - offset))
-                path.addLine(to: CGPoint(x: 12 - offset, y: 12))
-            }
-        }
-        .stroke(.secondary, lineWidth: 1)
-        .frame(width: 12, height: 12)
-        .scaleEffect(x: edge == .trailing ? 1 : -1)
-        .padding(6)
+        Color.clear
+        .frame(width: 16, height: 16)
         .contentShape(.rect)
         .pointerStyle(.frameResize(position: edge == .trailing ? .bottomTrailing : .bottomLeading))
         .gesture(
@@ -258,7 +252,6 @@ internal struct MemoPopoverView: View {
             set: { store.updateSelectedText($0) }
         ))
         .font(.system(size: store.fontSize, design: .monospaced))
-        .clipShape(.rect(cornerRadius: 8))
         .frame(maxHeight: .infinity)
         .onAppear {
             guard cutMonitor == nil else {
