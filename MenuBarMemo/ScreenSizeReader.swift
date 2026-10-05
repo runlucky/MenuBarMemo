@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-internal struct ResizableWindow: NSViewRepresentable {
+internal struct ScreenSizeReader: NSViewRepresentable {
     internal let onScreenChange: (CGSize) -> Void
 
     internal func makeNSView(context: Context) -> WindowObservingView {

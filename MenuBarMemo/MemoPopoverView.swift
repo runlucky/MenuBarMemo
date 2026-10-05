@@ -29,7 +29,7 @@ internal struct MemoPopoverView: View {
         .overlay(alignment: .bottomTrailing) {
             resizeGrip(.trailing)
         }
-        .background(ResizableWindow {
+        .background(ScreenSizeReader {
             screenSize = $0
         })
     }
