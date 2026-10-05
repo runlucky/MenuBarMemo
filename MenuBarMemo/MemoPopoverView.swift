@@ -100,6 +100,7 @@ internal struct MemoPopoverView: View {
 
             Button {
                 store.addTab()
+                settingsOpen = false
             } label: {
                 Image(systemName: "plus")
             }
@@ -184,9 +185,11 @@ internal struct MemoPopoverView: View {
         }
         .onTapGesture {
             store.selectTab(id: tab.id)
+            settingsOpen = false
         }
         .simultaneousGesture(TapGesture(count: 2).onEnded {
             store.selectTab(id: tab.id)
+            settingsOpen = false
             editingTabID = tab.id
         })
     }
