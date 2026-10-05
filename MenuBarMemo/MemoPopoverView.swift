@@ -99,14 +99,6 @@ internal struct MemoPopoverView: View {
             tabStrip
 
             Button {
-                store.addTab()
-                settingsOpen = false
-            } label: {
-                Image(systemName: "plus")
-            }
-            .buttonStyle(.bordered)
-
-            Button {
                 settingsOpen.toggle()
             } label: {
                 Image(systemName: "gearshape")
@@ -144,7 +136,21 @@ internal struct MemoPopoverView: View {
                         tabButton(tab)
                     }
                 }
+                
+                Button {
+                    store.addTab()
+                    settingsOpen = false
+                } label: {
+                    Image(systemName: "plus")
+                        .padding(.horizontal, 8)
+                        .frame(maxHeight: .infinity)
+                        .background(Color.secondary.opacity(0.1), in: .rect(cornerRadius: 6))
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+
             }
+            .fixedSize(horizontal: false, vertical: true)
         }
     }
 
