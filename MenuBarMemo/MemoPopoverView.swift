@@ -10,6 +10,7 @@ internal struct MemoPopoverView: View {
     @State private var resizingSize: CGSize? = nil
     @State private var resizeStart: (mouseLocation: CGPoint, size: CGSize)? = nil
     @State private var screenSize: CGSize? = nil
+    @State private var cutMonitor: Any? = nil
     @FocusState private var titleFocused: Bool
 
     internal var body: some View {
@@ -259,6 +260,30 @@ internal struct MemoPopoverView: View {
         .font(.system(size: store.fontSize, design: .monospaced))
         .clipShape(.rect(cornerRadius: 8))
         .frame(maxHeight: .infinity)
+        .onAppear {
+            guard cutMonitor == nil else {
+                return
+            }
+
+            cutMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                guard event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command,
+                      event.charactersIgnoringModifiers == "x",
+                      let textView = event.window?.firstResponder as? NSTextView,
+                      !textView.isFieldEditor,
+                      textView.cutCurrentLine() else {
+                    return event
+                }
+
+                return nil
+            }
+        }
+        .onDisappear {
+            if let cutMonitor {
+                NSEvent.removeMonitor(cutMonitor)
+            }
+
+            cutMonitor = nil
+        }
     }
 
     private var settingsPanel: some View {
