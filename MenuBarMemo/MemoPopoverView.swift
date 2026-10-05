@@ -5,6 +5,7 @@ internal struct MemoPopoverView: View {
     @State private var settingsOpen = false
     @State private var editingTabID: UUID? = nil
     @State private var hoveredTabID: UUID? = nil
+    @State private var deletingTab: MemoTab? = nil
     @State private var quitHovered = false
     @State private var resizingSize: CGSize? = nil
     @State private var resizeStart: (mouseLocation: CGPoint, size: CGSize)? = nil
@@ -28,6 +29,11 @@ internal struct MemoPopoverView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             resizeGrip(.trailing)
+        }
+        .overlay {
+            if let deletingTab {
+                deleteConfirmation(deletingTab)
+            }
         }
         .background(ScreenSizeReader {
             screenSize = $0
@@ -99,13 +105,6 @@ internal struct MemoPopoverView: View {
             tabStrip
 
             Button {
-                store.addTab()
-            } label: {
-                Image(systemName: "plus")
-            }
-            .buttonStyle(.bordered)
-
-            Button {
                 settingsOpen.toggle()
             } label: {
                 Image(systemName: "gearshape")
@@ -143,7 +142,21 @@ internal struct MemoPopoverView: View {
                         tabButton(tab)
                     }
                 }
+                
+                Button {
+                    store.addTab()
+                    settingsOpen = false
+                } label: {
+                    Image(systemName: "plus")
+                        .padding(.horizontal, 8)
+                        .frame(maxHeight: .infinity)
+                        .background(Color.secondary.opacity(0.1), in: .rect(cornerRadius: 6))
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+
             }
+            .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -154,8 +167,12 @@ internal struct MemoPopoverView: View {
         return HStack(spacing: 4) {
             if deletable {
                 Button {
-                    withAnimation(.easeInOut(duration: 0.15)) {
-                        store.removeTab(id: tab.id)
+                    if tab.text.isEmpty {
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            store.removeTab(id: tab.id)
+                        }
+                    } else {
+                        deletingTab = tab
                     }
                 } label: {
                     Image(systemName: "xmark")
@@ -184,11 +201,54 @@ internal struct MemoPopoverView: View {
         }
         .onTapGesture {
             store.selectTab(id: tab.id)
+            settingsOpen = false
         }
         .simultaneousGesture(TapGesture(count: 2).onEnded {
             store.selectTab(id: tab.id)
+            settingsOpen = false
             editingTabID = tab.id
         })
+    }
+
+    private func deleteConfirmation(_ tab: MemoTab) -> some View {
+        ZStack {
+            Color.black.opacity(0.3)
+                .onTapGesture {
+                    deletingTab = nil
+                }
+
+            VStack(spacing: 12) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .symbolRenderingMode(.multicolor)
+                    .font(.largeTitle)
+
+                Text("「\(tab.title.isEmpty ? "Untitled" : tab.title)」を削除しますか?")
+                    .font(.headline)
+                    .lineLimit(1)
+
+                Text("このメモは完全に削除されます。")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+
+                HStack {
+                    Button("キャンセル") {
+                        deletingTab = nil
+                    }
+                    .keyboardShortcut(.cancelAction)
+
+                    Button("削除", role: .destructive) {
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            store.removeTab(id: tab.id)
+                        }
+                        deletingTab = nil
+                    }
+                    .foregroundStyle(.red)
+                }
+            }
+            .padding()
+            .background(.regularMaterial, in: .rect(cornerRadius: 12))
+            .padding()
+        }
     }
 
     private var editor: some View {
