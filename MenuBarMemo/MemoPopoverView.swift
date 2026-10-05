@@ -6,6 +6,9 @@ internal struct MemoPopoverView: View {
     @State private var editingTabID: UUID? = nil
     @State private var hoveredTabID: UUID? = nil
     @State private var quitHovered = false
+    @State private var resizingSize: CGSize? = nil
+    @State private var resizeStart: (mouseLocation: CGPoint, size: CGSize)? = nil
+    @State private var screenSize: CGSize? = nil
     @FocusState private var titleFocused: Bool
 
     internal var body: some View {
@@ -19,7 +22,59 @@ internal struct MemoPopoverView: View {
             }
         }
         .padding()
-        .frame(width: 420, height: 520)
+        .frame(width: windowSize.width, height: windowSize.height)
+        .overlay(alignment: .bottomLeading) {
+            resizeGrip(.leading)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            resizeGrip(.trailing)
+        }
+        .background(ScreenSizeReader {
+            screenSize = $0
+        })
+    }
+
+    private var windowSize: CGSize {
+        let size = resizingSize ?? store.windowSize
+        guard let screenSize else {
+            return size
+        }
+
+        return CGSize(width: min(size.width, screenSize.width), height: min(size.height, screenSize.height))
+    }
+
+    private func resizeGrip(_ edge: HorizontalEdge) -> some View {
+        Path { path in
+            for offset in [4.0, 8.0, 12.0] {
+                path.move(to: CGPoint(x: 12, y: 12 - offset))
+                path.addLine(to: CGPoint(x: 12 - offset, y: 12))
+            }
+        }
+        .stroke(.secondary, lineWidth: 1)
+        .frame(width: 12, height: 12)
+        .scaleEffect(x: edge == .trailing ? 1 : -1)
+        .padding(6)
+        .contentShape(.rect)
+        .pointerStyle(.frameResize(position: edge == .trailing ? .bottomTrailing : .bottomLeading))
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    let mouseLocation = NSEvent.mouseLocation
+                    let start = resizeStart ?? (mouseLocation, windowSize)
+                    resizeStart = start
+                    let dx = mouseLocation.x - start.mouseLocation.x
+                    let dy = mouseLocation.y - start.mouseLocation.y
+                    resizingSize = CGSize(
+                        width: max(start.size.width + (edge == .trailing ? dx : -dx), store.minimumWindowSize.width),
+                        height: max(start.size.height - dy, store.minimumWindowSize.height)
+                    )
+                }
+                .onEnded { _ in
+                    store.setWindowSize(windowSize)
+                    resizingSize = nil
+                    resizeStart = nil
+                }
+        )
     }
 
     private var header: some View {
@@ -97,15 +152,17 @@ internal struct MemoPopoverView: View {
         let deletable = tab.id == hoveredTabID && 2 <= store.tabs.count
 
         return HStack(spacing: 4) {
-            Button {
-                store.removeTab(id: tab.id)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.caption2.bold())
+            if deletable {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        store.removeTab(id: tab.id)
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.caption2.bold())
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
-            .opacity(deletable ? 1 : 0)
-            .allowsHitTesting(deletable)
 
             Text(tab.title.isEmpty ? "Untitled" : tab.title)
                 .lineLimit(1)
@@ -117,10 +174,12 @@ internal struct MemoPopoverView: View {
         .background(selected ? Color.primary.opacity(0.15) : Color.secondary.opacity(0.1), in: .rect(cornerRadius: 6))
         .contentShape(.rect)
         .onHover { hovering in
-            if hovering {
-                hoveredTabID = tab.id
-            } else if hoveredTabID == tab.id {
-                hoveredTabID = nil
+            withAnimation(.easeInOut(duration: 0.15)) {
+                if hovering {
+                    hoveredTabID = tab.id
+                } else if hoveredTabID == tab.id {
+                    hoveredTabID = nil
+                }
             }
         }
         .onTapGesture {

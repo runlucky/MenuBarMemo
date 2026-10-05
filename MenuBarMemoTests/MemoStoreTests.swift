@@ -103,4 +103,24 @@ internal struct MemoStoreTests {
         #expect(store.fontSize == store.fontSizeRange.lowerBound)
     }
 
+    @Test internal func windowSizePersistsAcrossReloads() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.setWindowSize(CGSize(width: 600, height: 700))
+
+        let reloaded = MemoStore(defaults: defaults)
+        #expect(reloaded.windowSize == CGSize(width: 600, height: 700))
+    }
+
+    @Test internal func windowSizeIsClampedToMinimum() throws {
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = MemoStore(defaults: defaults)
+        store.setWindowSize(CGSize(width: 100, height: 100))
+        #expect(store.windowSize == store.minimumWindowSize)
+    }
+
 }

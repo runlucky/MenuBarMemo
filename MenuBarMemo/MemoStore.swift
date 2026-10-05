@@ -6,13 +6,17 @@ internal final class MemoStore {
     private(set) var tabs: [MemoTab]
     private(set) var selectedTabID: UUID
     private(set) var fontSize: Double
+    private(set) var windowSize: CGSize
 
     internal let fontSizeRange = 12.0...28.0
+    internal let minimumWindowSize = CGSize(width: 320, height: 240)
 
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let tabsKey = "MenuBarMemo.tabs"
     @ObservationIgnored private let fontSizeKey = "MenuBarMemo.fontSize"
     @ObservationIgnored private let selectedTabIDKey = "MenuBarMemo.selectedTabID"
+    @ObservationIgnored private let windowWidthKey = "MenuBarMemo.windowWidth"
+    @ObservationIgnored private let windowHeightKey = "MenuBarMemo.windowHeight"
 
     internal init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -23,6 +27,10 @@ internal final class MemoStore {
         let storedSelectedTabID = defaults.string(forKey: selectedTabIDKey).flatMap(UUID.init(uuidString:))
         self.selectedTabID = tabs.first { $0.id == storedSelectedTabID }?.id ?? tabs[0].id
         self.fontSize = defaults.object(forKey: fontSizeKey) as? Double ?? 16.0
+        self.windowSize = CGSize(
+            width: defaults.object(forKey: windowWidthKey) as? Double ?? 420.0,
+            height: defaults.object(forKey: windowHeightKey) as? Double ?? 520.0
+        )
 
         save()
     }
@@ -79,6 +87,14 @@ internal final class MemoStore {
         save()
     }
 
+    internal func setWindowSize(_ size: CGSize) {
+        windowSize = CGSize(
+            width: max(size.width, minimumWindowSize.width),
+            height: max(size.height, minimumWindowSize.height)
+        )
+        save()
+    }
+
     private var selectedIndex: Int? {
         tabs.firstIndex { $0.id == selectedTabID }
     }
@@ -87,6 +103,8 @@ internal final class MemoStore {
         defaults.set(try? JSONEncoder().encode(tabs), forKey: tabsKey)
         defaults.set(fontSize, forKey: fontSizeKey)
         defaults.set(selectedTabID.uuidString, forKey: selectedTabIDKey)
+        defaults.set(windowSize.width, forKey: windowWidthKey)
+        defaults.set(windowSize.height, forKey: windowHeightKey)
     }
 
 }
