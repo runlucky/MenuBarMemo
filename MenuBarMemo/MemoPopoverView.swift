@@ -269,6 +269,7 @@ internal struct MemoPopoverView: View {
                 guard event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command,
                       event.charactersIgnoringModifiers == "x",
                       let textView = event.window?.firstResponder as? NSTextView,
+                      !textView.isFieldEditor,
                       textView.cutCurrentLine() else {
                     return event
                 }
