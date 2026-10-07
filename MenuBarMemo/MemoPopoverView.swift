@@ -10,6 +10,8 @@ internal struct MemoPopoverView: View {
     @State private var resizingSize: CGSize? = nil
     @State private var resizeStart: (mouseLocation: CGPoint, size: CGSize)? = nil
     @State private var screenSize: CGSize? = nil
+    @State private var pinned = false
+    @State private var copied = false
     @State private var cutMonitor: Any? = nil
     @FocusState private var titleFocused: Bool
 
@@ -24,16 +26,13 @@ internal struct MemoPopoverView: View {
                     .padding(10)
             } else {
                 editor
-                    .padding(.bottom, 16)
             }
+
+            Divider()
+
+            bottomBar
         }
         .frame(width: windowSize.width, height: windowSize.height)
-        .overlay(alignment: .bottomLeading) {
-            resizeGrip(.leading)
-        }
-        .overlay(alignment: .bottomTrailing) {
-            resizeGrip(.trailing)
-        }
         .overlay {
             if let deletingTab {
                 deleteConfirmation(deletingTab)
@@ -42,6 +41,59 @@ internal struct MemoPopoverView: View {
         .background(ScreenSizeReader {
             screenSize = $0
         })
+        .background(WindowPinner(isPinned: pinned))
+    }
+
+    private var bottomBar: some View {
+        HStack(spacing: 0) {
+            resizeGrip(.leading)
+            
+            Button {
+                pinned.toggle()
+            } label: {
+                Image(systemName: pinned ? "pin.fill" : "pin")
+            }
+            .help(pinned ? "ピン留めを解除" : "ピン留め")
+
+            Spacer()
+
+            Button {
+                store.setFontSize(store.fontSize - 1)
+            } label: {
+                Image(systemName: "textformat.size.smaller")
+            }
+            .disabled(store.fontSize <= store.fontSizeRange.lowerBound)
+            .help("文字を小さく")
+            
+            Text(store.fontSize.description)
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            Button {
+                store.setFontSize(store.fontSize + 1)
+            } label: {
+                Image(systemName: "textformat.size.larger")
+            }
+            .disabled(store.fontSizeRange.upperBound <= store.fontSize)
+            .help("文字を大きく")
+            .padding(.trailing, 20)
+            
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(store.selectedTab.text, forType: .string)
+                copied = true
+                Task {
+                    try? await Task.sleep(for: .seconds(1))
+                    copied = false
+                }
+            } label: {
+                Image(systemName: copied ? "checkmark" : "doc.on.doc")
+            }
+            .help("全文をコピー")
+            
+            resizeGrip(.trailing)
+        }
+        .buttonStyle(BarButtonStyle())
     }
 
     private var windowSize: CGSize {
@@ -55,7 +107,7 @@ internal struct MemoPopoverView: View {
 
     private func resizeGrip(_ edge: HorizontalEdge) -> some View {
         Color.clear
-        .frame(width: 16, height: 16)
+        .frame(width: 32, height: 24)
         .contentShape(.rect)
         .pointerStyle(.frameResize(position: edge == .trailing ? .bottomTrailing : .bottomLeading))
         .gesture(
