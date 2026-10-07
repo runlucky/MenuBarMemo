@@ -1,0 +1,3 @@
+- When performing a code review, respond in Japanese.
+- IMPORTANT: Entire response must be in the language with ISO code: ja-JP
+- 日本語で回答してください
