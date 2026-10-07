@@ -65,7 +65,7 @@ internal struct MemoPopoverView: View {
             .disabled(store.fontSize <= store.fontSizeRange.lowerBound)
             .help("文字を小さく")
             
-            Text(store.fontSize.description)
+            Text(Int(store.fontSize).description)
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
